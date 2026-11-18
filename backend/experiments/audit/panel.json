@@ -1,0 +1,92 @@
+{
+  "dinaciclib": {
+    "chembl_id": "CHEMBL2103840",
+    "pref_name": "DINACICLIB",
+    "smiles": "CCc1cnn2c(NCc3ccc[n+]([O-])c3)cc(N3CCCC[C@H]3CCO)nc12",
+    "note": "pan-CDK, CDK2 IC50 ~1 nM"
+  },
+  "alvocidib": {
+    "chembl_id": "CHEMBL428690",
+    "pref_name": "ALVOCIDIB",
+    "smiles": "CN1CC[C@H](c2c(O)cc(O)c3c(=O)cc(-c4ccccc4Cl)oc23)[C@H](O)C1",
+    "note": "flavopiridol, pan-CDK, CDK2 ~100 nM"
+  },
+  "seliciclib": {
+    "chembl_id": "CHEMBL14762",
+    "pref_name": "SELICICLIB",
+    "smiles": "CC[C@H](CO)Nc1nc(NCc2ccccc2)c2ncn(C(C)C)c2n1",
+    "note": "roscovitine, CDK2 ~700 nM"
+  },
+  "AT7519": {
+    "chembl_id": "CHEMBL445813",
+    "pref_name": "AT-7519",
+    "smiles": "O=C(NC1CCNCC1)c1n[nH]cc1NC(=O)c1c(Cl)cccc1Cl",
+    "note": "pan-CDK, CDK2 ~47 nM"
+  },
+  "milciclib": {
+    "chembl_id": "CHEMBL564829",
+    "pref_name": "MILCICLIB",
+    "smiles": "CNC(=O)c1nn(C)c2c1C(C)(C)Cc1cnc(Nc3ccc(N4CCN(C)CC4)cc3)nc1-2",
+    "note": "CDK2 ~45 nM"
+  },
+  "riviciclib": {
+    "chembl_id": "CHEMBL3545283",
+    "pref_name": "RIVICICLIB",
+    "smiles": "CN1CCC(c2c(O)cc(O)c3c(=O)cc(-c4ccccc4Cl)oc23)C1CO",
+    "note": "P276-00, pan-CDK"
+  },
+  "palbociclib": {
+    "chembl_id": "CHEMBL189963",
+    "pref_name": "PALBOCICLIB",
+    "smiles": "CC(=O)c1c(C)c2cnc(Nc3ccc(N4CCNCC4)cn3)nc2n(C2CCCC2)c1=O",
+    "note": "CDK4/6-selective, weak CDK2"
+  },
+  "ribociclib": {
+    "chembl_id": "CHEMBL3545110",
+    "pref_name": "RIBOCICLIB",
+    "smiles": "CN(C)C(=O)c1cc2cnc(Nc3ccc(N4CCNCC4)cn3)nc2n1C1CCCC1",
+    "note": "CDK4/6-selective, weak CDK2"
+  },
+  "abemaciclib": {
+    "chembl_id": "CHEMBL3301610",
+    "pref_name": "ABEMACICLIB",
+    "smiles": "CCN1CCN(Cc2ccc(Nc3ncc(F)c(-c4cc(F)c5nc(C)n(C(C)C)c5c4)n3)nc2)CC1",
+    "note": "CDK4/6, some CDK2 activity"
+  },
+  "imatinib": {
+    "chembl_id": "CHEMBL941",
+    "pref_name": "IMATINIB",
+    "smiles": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1",
+    "note": "BCR-ABL, not a CDK2 drug"
+  },
+  "gefitinib": {
+    "chembl_id": "CHEMBL939",
+    "pref_name": "GEFITINIB",
+    "smiles": "COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCN1CCOCC1",
+    "note": "EGFR, not a CDK2 drug"
+  },
+  "aspirin": {
+    "chembl_id": "CHEMBL25",
+    "pref_name": "ASPIRIN",
+    "smiles": "CC(=O)Oc1ccccc1C(=O)O",
+    "note": "NSAID, negative control"
+  },
+  "caffeine": {
+    "chembl_id": "CHEMBL113",
+    "pref_name": "CAFFEINE",
+    "smiles": "Cn1c(=O)c2c(ncn2C)n(C)c1=O",
+    "note": "xanthine, negative control"
+  },
+  "paracetamol": {
+    "chembl_id": "CHEMBL5592090",
+    "pref_name": null,
+    "smiles": "NC(=O)Nc1ccc(O)cc1",
+    "note": "analgesic, negative control"
+  },
+  "metformin": {
+    "chembl_id": "CHEMBL1431",
+    "pref_name": "METFORMIN",
+    "smiles": "CN(C)C(=N)NC(=N)N",
+    "note": "biguanide, negative control"
+  }
+}

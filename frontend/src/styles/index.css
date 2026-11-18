@@ -1,0 +1,256 @@
+/* Self-hosted so the app stays usable with no network — this whole system is
+   meant to run on a workstation next to the models, not against a CDN. */
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/instrument-sans/index.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Palette
+ *
+ * A cool, indigo-tinted slate rather than warm paper: the neutrals lean
+ * toward the accent's own hue, so the one saturated colour on the page
+ * reads as part of the same family instead of sitting on top of it.
+ *
+ * Proportions follow a 60 / 30 / 10 split, measured on screenshots:
+ *   60  panel   white cards carrying every reading
+ *   30  page    the tinted canvas, sunken wells and chrome around them
+ *   10  accent  indigo actions, marks, the funnel ramp and illustration
+ * Status hues (good / warn / crit / info) sit outside that budget and are
+ * reserved for state — they never stand in for a series colour.
+ *
+ * Every text token clears WCAG AA (4.5:1) on page, panel and sunken in
+ * both themes; `control` clears the 3:1 non-text minimum for input edges.
+ * Channels are stored as `R G B` for Tailwind's `<alpha-value>` support.
+ * ------------------------------------------------------------------ */
+:root {
+  --page: 238 241 247;
+  --panel: 255 255 255;
+  --sunken: 244 246 250;
+  --rule: 222 226 236;
+  --rule-strong: 196 202 218;
+  --control: 132 140 166;
+  --shadow: 20 28 64;
+
+  --ink: 14 18 36;
+  --ink-2: 58 65 92;
+  --ink-3: 93 100 126;
+
+  --accent: 51 65 170;
+  --accent-hover: 39 51 140;
+  --accent-soft: 233 236 252;
+  --accent-on: 255 255 255;
+
+  --good: 22 114 82;
+  --good-soft: 222 242 233;
+  --warn: 146 90 8;
+  --warn-soft: 250 238 215;
+  --crit: 180 40 48;
+  --crit-soft: 252 230 231;
+  --info: 108 64 170;
+  --info-soft: 240 233 252;
+
+  /* Ordinal ramp, light→dark as the funnel narrows; ~1.6:1 between steps. */
+  --stage-1: 150 162 222;
+  --stage-2: 108 124 206;
+  --stage-3: 70 86 186;
+  --stage-4: 40 52 140;
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --page: 10 12 22;
+  --panel: 21 25 42;
+  --sunken: 14 17 30;
+  --rule: 36 42 64;
+  --rule-strong: 56 63 92;
+  --control: 98 106 140;
+  --shadow: 0 0 0;
+
+  --ink: 232 235 245;
+  --ink-2: 176 182 204;
+  --ink-3: 138 146 174;
+
+  --accent: 152 168 255;
+  --accent-hover: 180 192 255;
+  --accent-soft: 33 40 78;
+  --accent-on: 10 12 22;
+
+  --good: 84 200 148;
+  --good-soft: 17 46 40;
+  --warn: 232 178 82;
+  --warn-soft: 52 40 16;
+  --crit: 246 134 128;
+  --crit-soft: 62 26 32;
+  --info: 192 162 244;
+  --info-soft: 42 32 72;
+
+  /* The ramp's anchor flips: on a dark ground the narrowest stage is the
+     lightest step, so "further down the funnel" still reads as "more". */
+  --stage-1: 52 64 140;
+  --stage-2: 80 98 190;
+  --stage-3: 122 140 232;
+  --stage-4: 170 184 255;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-page text-ink antialiased;
+    font-family: theme('fontFamily.sans');
+    font-optical-sizing: auto;
+    /* Graph paper: a faint dot lattice on the canvas, with a soft wash of
+       the accent behind the masthead so the top of the page has a light
+       source. Both sit far below any text contrast. */
+    background-image:
+      radial-gradient(60rem 28rem at 12% -6rem, rgb(var(--accent) / 0.07), transparent 70%),
+      radial-gradient(rgb(var(--ink-3) / 0.16) 1px, transparent 1.2px);
+    background-size: 100% 100%, 22px 22px;
+    background-repeat: no-repeat, repeat;
+    background-attachment: fixed;
+  }
+
+  [data-theme='dark'] body {
+    background-image:
+      radial-gradient(60rem 28rem at 12% -6rem, rgb(var(--accent) / 0.10), transparent 70%),
+      radial-gradient(rgb(var(--ink-3) / 0.13) 1px, transparent 1.2px);
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.18);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/55 ring-offset-2;
+    --tw-ring-offset-color: rgb(var(--panel));
+  }
+
+  /* Fraunces carries the voice: optical sizing for display, a little SOFT to
+     take the mechanical edge off, and WONK on for the singular letterforms
+     that keep it from reading like every other UI serif. */
+  .font-display {
+    font-variation-settings: 'SOFT' 24, 'WONK' 1, 'opsz' 96;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-card border border-rule bg-panel shadow-card;
+  }
+
+  .surface-quiet {
+    @apply rounded-panel border border-rule bg-sunken;
+  }
+
+  /* Small all-caps labels do the work of a lab form's field names. */
+  .label {
+    @apply text-micro font-medium uppercase tracking-[0.11em] text-ink-3;
+  }
+
+  .numeral {
+    font-family: theme('fontFamily.mono');
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'zero' 1;
+  }
+
+  /* The icon tile beside each section heading: the accent's quiet form. */
+  .icon-tile {
+    @apply inline-flex h-7 w-7 shrink-0 items-center justify-center self-center
+           rounded-lg bg-accent-soft text-accent;
+    box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.12);
+  }
+
+  .rule-title {
+    @apply flex items-center gap-3;
+  }
+  .rule-title::after {
+    content: '';
+    @apply h-px flex-1 bg-rule;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border
+           text-sm font-medium transition-all duration-200 ease-settle
+           disabled:cursor-not-allowed disabled:opacity-45;
+  }
+  .btn-primary {
+    @apply btn border-transparent bg-accent px-5 py-2.5 text-accent-on
+           enabled:hover:bg-accent-hover
+           enabled:hover:-translate-y-px enabled:hover:shadow-lift
+           enabled:active:translate-y-0;
+  }
+  .btn-quiet {
+    @apply btn border-rule bg-panel px-3 py-2 text-ink-2
+           enabled:hover:border-rule-strong enabled:hover:text-ink;
+  }
+
+  .chip {
+    @apply rounded-full border border-rule-strong bg-panel px-3 py-1.5 text-2xs
+           text-ink-2 transition-all duration-200 ease-settle
+           enabled:hover:border-accent/45 enabled:hover:bg-accent-soft
+           enabled:hover:text-accent disabled:opacity-45;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2 py-0.5
+           text-2xs font-medium;
+  }
+
+  .field {
+    @apply w-full rounded-panel border border-control bg-sunken px-3.5 py-3
+           text-sm leading-relaxed text-ink placeholder:text-ink-3/70
+           transition-colors duration-200
+           focus:border-accent/60 focus:bg-panel focus:outline-none;
+  }
+
+  /* Bar tracks are inset rather than outlined: the reading is the fill's
+     length, and a heavy border competes with it. */
+  .track {
+    @apply overflow-hidden rounded-full bg-sunken;
+    box-shadow: inset 0 0 0 1px rgb(var(--rule) / 0.9);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Stagger helper: children read in sequence instead of arriving at once. */
+  .stagger > * {
+    animation-delay: calc(var(--stagger-step, 55ms) * var(--i, 0));
+  }
+}
+
+/* Structure depictions are SVG. A fixed box with the default `meet` fit keeps
+   every card the same height while each molecule still scales to fill it. */
+.structure svg {
+  display: block;
+  width: 100%;
+  height: 168px;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
